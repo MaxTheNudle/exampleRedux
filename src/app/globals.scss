@@ -1,14 +1,10 @@
+@use 'variables' as v ;
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  background: v.$color-secondary;
+  background: linear-gradient(90deg, v.$color-secondary 0%, v.$color-primary 100%);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
 html,
 body {
