@@ -1,14 +1,11 @@
 @use '../variables' as v;
+
+.header {
+    margin: 20px;
+}
+
 .page {
-    --gray-rgb: 0, 0, 0;
-    --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
-    --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
-
-    --button-primary-hover: #383838;
-    --button-secondary-hover: #f2f2f2;
-
     display: grid;
-    grid-template-rows: 20px 1fr 20px;
     align-items: center;
     justify-items: center;
     padding: 80px;
@@ -16,9 +13,34 @@
     font-family: var(--font-geist-sans);
 }
 
+.HomeButton {
+    height: 55px !important;
+    width: 100px;
+}
+
 .buttonGroup {
     display: flex;
     gap: 10px;
+}
+
+.buttonGroup Button {
+
+    &:hover {
+        background-color: v.$color-primary !important;
+        border-color: v.$color-primary !important;
+    }
+
+    &:active {
+        background-color: v.$color-secondary !important;
+        border-color: v.$color-secondary !important;
+    }
+}
+
+.rotateIconGroup {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
 }
 
 .bottomTag {
@@ -26,12 +48,12 @@
     bottom: -10px;
     left: 50%;
     transform: translateX(-50%);
-  }
+}
 
 .normalSize {
-    height: 60px !important;
+    height: 120px !important;
     padding: 0 20px;
-    font-size: 16px;
+    width: 200px;
 }
 
 .extraLarge {
@@ -50,11 +72,16 @@
 .Shape {
     width: 275px;
     height: 120px !important;
-}
 
-.Shape:hover{
-    background-color: v.$color-primary !important;
-    border-color: v.$color-primary !important;
+    &:hover {
+        background-color: v.$color-primary !important;
+        border-color: v.$color-primary !important;
+    }
+
+    &:active {
+        background-color: v.$color-secondary !important;
+        border-color: v.$color-secondary !important;
+    }
 }
 
 .shapeRow {
@@ -66,65 +93,72 @@
 .ShapeContent {
     &.normal {
         .shapeRow:nth-child(odd) {
-            padding-left: 25px;
+            padding-left: 50px;
         }
 
         .shapeRow:nth-child(even) {
-            padding-right: 25px;
+            padding-right: 50px;
         }
     }
 
     &.reversed {
         .shapeRow:nth-child(odd) {
-            padding-right: 25px;
+            padding-right: 50px;
         }
 
         .shapeRow:nth-child(even) {
-            padding-left: 25px;
+            padding-left: 50px;
         }
     }
 }
 
 
-  
-  .square {
-    width: 100px;
-    height: 100px;
-    background-color: #3498db; // คุณสามารถเปลี่ยนสีได้
-  }
-  
-  .circle {
-    width: 100px;
-    height: 100px;
-    background-color: #e74c3c; // คุณสามารถเปลี่ยนสีได้
-    border-radius: 50%;
-  }
-  
-  .ellipse {
-    width: 150px;
-    height: 100px;
-    background-color: #2ecc71; // คุณสามารถเปลี่ยนสีได้
-    border-radius: 50%;
-  }
-  
 
-  .trapezoid {
+.square {
+    width: 100px;
+    height: 100px;
+    @extend .shapeColor;
+}
+
+.circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    @extend .shapeColor;
+}
+
+.ellipse {
     width: 150px;
     height: 100px;
-    background-color: #9b59b6; // คุณสามารถเปลี่ยนสีได้
+    border-radius: 50%;
+    @extend .shapeColor;
+}
+
+
+.trapezoid {
+    width: 150px;
+    height: 100px;
     clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
-  }
+    @extend .shapeColor;
+}
 
-  .rectangle {
+.rectangle {
     width: 200px;
     height: 100px;
-    background-color: #f39c12; // คุณสามารถเปลี่ยนสีได้
-  }
-  
-  .parallelogram {
+    @extend .shapeColor;
+}
+
+.parallelogram {
     width: 200px;
     height: 100px;
-    background-color: #16a085; // คุณสามารถเปลี่ยนสีได้
     transform: skew(-20deg);
-  }
-  
+    @extend .shapeColor;
+}
+
+.shapeColor {
+    background-color: #888888;
+
+    &:hover {
+        background-color: white;
+    }
+}
