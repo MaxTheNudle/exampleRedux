@@ -13,7 +13,6 @@ export interface Shape {
 }
 
 
-
 const initialState: Shape = {
   shape: [
     {

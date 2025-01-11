@@ -1,9 +1,10 @@
 import { combineSlices, configureStore } from "@reduxjs/toolkit"
 import { shapeListSlice } from "./slice/shapeList"
+import { customerListSlice } from "./slice/customerList"
 import { setupListeners } from "@reduxjs/toolkit/query"
 
 
-const rootReducer = combineSlices(  shapeListSlice)
+const rootReducer = combineSlices(  shapeListSlice, customerListSlice)
 
 export type RootState = ReturnType<typeof rootReducer>
 
