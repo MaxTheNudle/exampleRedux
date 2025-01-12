@@ -8,6 +8,14 @@
     padding-right: 40px;
 }
 
+.changeLngRow {
+    display: flex;
+    justify-content: space-between;
+}
+.HomeButton {
+    height: 25px !important;
+    width: 100px;
+}
 
 .formContainer {
     border: 3px solid #414141;

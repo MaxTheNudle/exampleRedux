@@ -2,6 +2,8 @@
 
 .header {
     margin: 20px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .page {
@@ -14,7 +16,7 @@
 }
 
 .HomeButton {
-    height: 55px !important;
+    height: 25px !important;
     width: 100px;
 }
 
@@ -48,6 +50,8 @@
     bottom: -10px;
     left: 50%;
     transform: translateX(-50%);
+    background-color: v.$color-secondary !important;
+    color: white !important;
 }
 
 .normalSize {

@@ -6,17 +6,19 @@ import { ParsedCountry } from 'react-international-phone';
 import { Button, Popconfirm, Table, Form, Input, Select, DatePicker, Radio, Row, Col, Flex, PaginationProps, Checkbox } from "antd";
 import { use, useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/strore/hooks";
-import { title } from "process";
 import { CustomerDetail, } from "@/strore/slice/customerList";
 import { addCustomer, removeCustomer, editCustomer, fetchCustormerInStorage } from "@/strore/slice/customerList";
 import Image from "next/image";
-import thaiLandPic from "../../../public/Icon/thailand.png";
-import AmericanPic from "../../../public/Icon/american.png";
-import FrenchPic from "../../../public/Icon/france.png";
+import thaiLandPic from "../../../../public/Icon/thailand.png";
+import AmericanPic from "../../../../public/Icon/american.png";
+import FrenchPic from "../../../../public/Icon/france.png";
+import { useTranslation } from "../../i18n/client";
 import moment from "moment";
+import ChangeLntButton from "@/component/changelngButton";
+import Link from "next/link";
 
 
-export default function Test2() {
+export default function Test2({ params }: { params: { lng: string } }) {
 
   const dispatch = useAppDispatch();
   const customerList = useAppSelector((state) => state.customerList.customer);
@@ -29,12 +31,14 @@ export default function Test2() {
   const IdNumber3 = useRef(null);
   const IdNumber4 = useRef(null);
   const IdNumber5 = useRef(null);
+  const lng = params.lng;
+  const { t } = useTranslation(lng);
 
 
   const [form] = Form.useForm();
   const columns = [
     {
-      title: 'Name',
+      title: t('name'),
       dataIndex: 'fontName',
       key: 'fontName',
       sorter: (a: CustomerDetail, b: CustomerDetail) => a.fontName.localeCompare(b.fontName),
@@ -43,13 +47,16 @@ export default function Test2() {
       ),
     },
     {
-      title: 'Gender',
+      title: t('gender'),
       dataIndex: 'gender',
       key: 'gender',
       sorter: (a: CustomerDetail, b: CustomerDetail) => a.gender.localeCompare(b.gender),
+      render: (_: unknown, record: CustomerDetail) => (
+        <p>{t(record.gender)}</p>
+      ),
     },
     {
-      title: 'Mobile Phone',
+      title: t('mobilePhone'),
       dataIndex: 'PhoneNumber',
       key: 'PhoneNumber',
       sorter: (a: CustomerDetail, b: CustomerDetail) => a.PhoneNumber.localeCompare(b.PhoneNumber),
@@ -58,13 +65,16 @@ export default function Test2() {
       ),
     },
     {
-      title: 'Nationality',
+      title: t('nationality'),
       dataIndex: 'nationality',
       key: 'nationality',
       sorter: (a: CustomerDetail, b: CustomerDetail) => a.nationality.localeCompare(b.nationality),
+      render: (_: unknown, record: CustomerDetail) => (
+        <p>{t(record.nationality)}</p>
+      ),
     },
     {
-      title: 'Manage',
+      title: t('manage'),
       key: 'key',
       render: (_: unknown, record: any) => (
         <div>
@@ -74,11 +84,11 @@ export default function Test2() {
               boxShadow: 'none',
             }}
             onClick={() => handleEdit(record)} >
-            Edit
+            {t('edit')}
           </Button>
 
           <Popconfirm
-            title="Are you sure to delete this row?"
+            title={t('deleconfirm')}
             onConfirm={() => dispatch(removeCustomer([record]))}
             okText="Yes"
             cancelText="No"
@@ -88,7 +98,8 @@ export default function Test2() {
                 border: 'none',
                 boxShadow: 'none',
               }}>
-              Delete
+              {t('delete')}
+
             </Button>
           </Popconfirm>
         </div>
@@ -221,6 +232,17 @@ export default function Test2() {
   console.log("customerList", customerList)
   return (
     <div className={styles.page}>
+      <div className={styles.changeLngRow}>
+      <div>
+        <h1> {t('Form&Table')} </h1>
+      </div>
+      <div>
+       <ChangeLntButton params={params} />
+       < Link href={`/${lng}`} passHref>
+          <Button className={styles.HomeButton} > {t('Home')}</Button>
+        </ Link>
+      </div>
+      </div>
       <div className={styles.formContainer}>
         <Form
           form={form}
@@ -249,12 +271,12 @@ export default function Test2() {
           <Row>
             <Col span={3}>
               <Form.Item
-                label="Title"
+                label={t('title')}
                 name="title"
 
                 rules={[{ required: true, message: 'Title' }]}
               >
-                <Select placeholder="Title">
+                <Select placeholder={t('title')}>
                   <Option value="Mr">Mr.</Option>
                   <Option value="Mrs">Mrs.</Option>
                   <Option value="Miss">Miss.</Option>
@@ -263,7 +285,7 @@ export default function Test2() {
             </Col>
             <Col span={10}>
               <Form.Item
-                label="First Name"
+                label={t('firstname')}
                 name="fontName"
                 rules={[{ required: true, message: 'First Name' }]}
               >
@@ -272,7 +294,7 @@ export default function Test2() {
             </Col>
             <Col span={10}>
               <Form.Item
-                label="Last Name"
+                label={t('lastname')}
                 name="LastName"
                 rules={[{ required: true, message: 'Last Name' }]}
               >
@@ -283,23 +305,23 @@ export default function Test2() {
           <Row>
             <Col span={4}>
               <Form.Item
-                label="BirthDay"
+                label={t('birthday')}
                 name="DateOfBirth"
                 rules={[{ required: true, message: 'Date of Birth' }]}
               >
-                <DatePicker />
+                <DatePicker placeholder={t('dateFormat')} />
               </Form.Item>
             </Col>
             <Col span={10}>
               <Form.Item
-                label="Nationality"
+                label={t('nationality')}
                 name="nationality"
                 rules={[{ required: true, message: 'Nationality' }]}
               >
-                <Select placeholder="Nationality">
-                  <Option value="thai">Thai</Option>
-                  <Option value="french">French</Option>
-                  <Option value="american">American</Option>
+                <Select placeholder={"--" + t('pleaseSelect') + "--"}>
+                  <Option value="thai">{t('thai')}</Option>
+                  <Option value="french">{t('french')}</Option>
+                  <Option value="american">{t('american')}</Option>
                 </Select>
               </Form.Item>
             </Col>
@@ -307,7 +329,7 @@ export default function Test2() {
           <Row>
             <Col>
               <Form.Item
-                label="Citizen ID"
+                label={t('citizenId')}
                 name="IdNumber1"
                 rules={[{ required: false, message: 'Citizen ID' }]}
               >
@@ -403,14 +425,14 @@ export default function Test2() {
           <Row>
             <Col>
               <Form.Item
-                label="Gender"
+                label={t('gender')}
                 name="gender"
                 rules={[{ required: true, message: 'Gender' }]}
               >
                 <Radio.Group>
-                  <Radio value="male">Male</Radio>
-                  <Radio value="female">Female</Radio>
-                  <Radio value="Unsex">Unsex</Radio>
+                  <Radio value="male">{t('male')}</Radio>
+                  <Radio value="female">{t('female')}</Radio>
+                  <Radio value="unsex">{t('unsex')}</Radio>
                 </Radio.Group>
               </Form.Item>
             </Col>
@@ -418,11 +440,11 @@ export default function Test2() {
           <Row gutter={8}>
             <Col span={6}>
               <Form.Item
-                label="Mobile Phone"
+                label={t('mobilePhone')}
                 name="PhoneNumberCountry"
                 rules={[{ required: true, message: 'Mobile Phone number Country' }]}
               >
-                <Select placeholder="Mobile Phone">
+                <Select placeholder={t('mobilePhone')}>
                   <Option value="+66">
                     <Image
                       aria-hidden
@@ -472,7 +494,7 @@ export default function Test2() {
           <Row>
             <Col>
               <Form.Item
-                label="Passport"
+                label={t('passportNo')}
                 name="passport"
                 rules={[{ required: false, message: 'Passport' }]}
               >
@@ -483,7 +505,7 @@ export default function Test2() {
           <Row>
             <Col>
               <Form.Item
-                label="Salary Expectations"
+                label={t('expectedSalary')}
                 name="salaryExpectations"
                 rules={[{ required: true, message: 'Salary Expectations' }]}
               >
@@ -493,14 +515,14 @@ export default function Test2() {
             <Col style={{ marginLeft: "240px" }}>
               <Form.Item>
                 <Button htmlType="submit">
-                  Submit
+                  {t('submit')}
                 </Button>
               </Form.Item>
             </Col>
             <Col style={{ marginLeft: "80px" }}>
               <Form.Item>
                 <Button onClick={handleClear}>
-                  Reset
+                  {t('reset')}
                 </Button>
               </Form.Item>
             </Col>
@@ -513,16 +535,16 @@ export default function Test2() {
             checked={selectAllChecked}
             onChange={specialSelecAll}
           >
-            Select All
+            {t('selectAll')}
           </Checkbox>
 
           <Popconfirm
-            title="Are you sure to delete this row?"
+            title={t('deleconfirm')}
             onConfirm={handleDelete}
             okText="Yes"
             cancelText="No"
           >
-            <Button>Delete Selected</Button>
+            <Button>{t('deleteSelected')}</Button>
           </Popconfirm>
         </div>
         <Table

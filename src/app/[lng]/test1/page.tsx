@@ -1,21 +1,22 @@
 "use client"
 import styles from "./page.module.scss";
 import { useAppDispatch, useAppSelector } from "@/strore/hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button  , Tag   } from "antd";
 import { moveLeft, moveRight, random } from "@/strore/slice/shapeList";
 import { ShapeItem } from "@/strore/slice/shapeList";
 import { CaretDownOutlined, CaretLeftOutlined, CaretRightOutlined, CaretUpOutlined  , } from '@ant-design/icons';
 import Link from "next/link";
+import { useTranslation } from "../../i18n/client";
+import ChangeLntButton from "@/component/changelngButton";
 
-/**
- * 
- * This pages is for Layout and Style 
- */
-export default function Test1() {
+
+export default  function Test1({ params }: { params: { lng: string } }) {
   const dispatch = useAppDispatch();
   const shape = useAppSelector((state) => state.shapeList.shape);
   const [isReversedLayout, setIsReversed] = useState(false);
+  const lng = params.lng;
+
   const IconStyle =  {
     fontSize: '150px',
     color: '#888888',
@@ -40,29 +41,37 @@ export default function Test1() {
     );
   }
 
+  const { t } = useTranslation(lng);
+
   return (
     <>
       <header className={styles.header}>
-        < Link href="/" passHref>
-          <Button  className={styles.HomeButton} > Home </Button>
+        <div>
+         <h1> {t('Layout&Style')} </h1>
+        </div>
+        <div>
+        <ChangeLntButton params={params} />
+        < Link href={`/${lng}`} passHref>
+          <Button className={styles.HomeButton} > {t('Home')}</Button>
         </ Link>
+        </div>
       </header>
       <div className={styles.page}>
         <div className={styles.buttonGroup}>
           <Button className={styles.normalSize} onClick={() => dispatch(moveLeft())}>
             <CaretLeftOutlined style={IconStyle} />
-            <Tag className={styles.bottomTag} color="green">Blue</Tag>
+            <Tag className={styles.bottomTag} >{t("Move-Shape")}</Tag>
           </Button>
           <Button className={styles.extraLarge} onClick={() => setIsReversed(!isReversedLayout)}>
             <div className={styles.rotateIconGroup}>
               <CaretUpOutlined style={IconStyle} />
               <CaretDownOutlined style={IconStyle} />
             </div>
-            <Tag className={styles.bottomTag} color="green">Blue</Tag>
+            <Tag className={styles.bottomTag} >{t("Move-Postion")}</Tag>
           </Button>
           <Button className={styles.normalSize} onClick={() => dispatch(moveRight())}>
             <CaretRightOutlined style={IconStyle} />
-            <Tag className={styles.bottomTag} color="green">Blue</Tag>
+            <Tag className={styles.bottomTag} >{t("Move-Shape")}</Tag>
           </Button>
         </div>
         <div

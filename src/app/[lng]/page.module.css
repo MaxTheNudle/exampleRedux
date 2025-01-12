@@ -164,6 +164,15 @@ a.secondary {
 }
 
 .ButtonNavigation {
- height: 200px !important;
+  height: 200px !important;
   width: 400px;
+  justify-content: space-around !important;
+  flex-direction: column !important;
+  align-items: baseline !important;
+}
+
+.ButtonContainer {
+  display: flex;
+  flex-direction: column;
+
 }
